@@ -1,0 +1,6 @@
+{{#each rows}}
+
+<p>nome: {{this.nome}} tem {{this.pag}} {{this.pagtit}}<a href="/books/{{this.nome}}"> ir</a></p>
+
+{{/each}}
+<button type="button" onclick="window.location.href='/books'">Voltar</button>

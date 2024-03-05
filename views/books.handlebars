@@ -1,0 +1,20 @@
+
+    {{#if semRow}} <h3>{{semRow}}</h3> {{/if}}
+
+    {{#each rows}}
+
+        <p>nome: {{this.nome}} tem {{this.pag}} {{this.pagtit}} 
+        <a href="/books/{{this.nome}}" > ir</a> <a href="/books/deletar/{{this.nome}}"> deletar</a></p>
+
+    {{/each}}  
+
+
+<h1>filtrar</h1>
+
+<form action="/books/filtro" method="POST">
+    <input type="text" name="filtro" placeholder="nome">
+    <button type="submit">Filtrar</button>
+</form>
+<br>
+<h1>Cadastrar</h1>
+<button onclick="window.location.href='/'">cadastrar</button>

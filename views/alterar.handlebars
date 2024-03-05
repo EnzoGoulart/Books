@@ -1,0 +1,11 @@
+<h1>alterar</h1>
+
+<form action="/books/alterar/confirmar" method="post">
+    <input style="display: none;" type="text" name="nomeAntigo" value="{{nome}}" placeholder="nome">
+    <input type="text" name="nome" value="{{nome}}" placeholder="nome">
+    <input type="text" name= "pag" value= "{{row.pag}}" placeholder= "pag">
+    <br> <br>
+    <button type="submit">Alterar</button>
+</form>
+<br><br> 
+<button type="button" onclick="window.location.href='/books'">Voltar</button>
