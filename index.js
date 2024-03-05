@@ -30,8 +30,8 @@ app.post("/books/alterar/confirmar", async(req, res) => {
     }); 
 
     try{
-        const sql = `UPDATE book SET nome = '${nome}', pag = '${pag}' WHERE nome = '${nomeAntigo}'`
-        await conn.execute(sql); 
+        const sql = `UPDATE book SET nome = ?, pag = ? WHERE nome = ?`;
+        await conn.execute(sql, [nome, pag, nomeAntigo]); 
     } catch (e) {
         console.log(e)
     } finally {  
@@ -49,9 +49,9 @@ app.get("/books/deletar/:nome", async(req, res) => {
         database: 'enzo'
     }); 
 
-    const sql = `DELETE FROM book WHERE nome = '${nome}' `
+    const sql = `DELETE FROM book WHERE nome = ?`
 
-    await conn.execute(sql)
+    await conn.execute(sql, [nome])
      
     res.redirect("/books") 
 })
@@ -72,9 +72,9 @@ app.get("/books/alterar/:nome", async(req, res) => {
                   ELSE 'paginas' 
                  END AS pagtit
                    FROM book
-                  WHERE nome = '${nome}' `
+                  WHERE nome = ? `
 
-    let [row] = await conn.execute(sql)
+    let [row] = await conn.execute(sql, [nome])
     
     if(row.length == 0){ 
         res.redirect("/books")
@@ -104,11 +104,17 @@ app.get("/books/:nome", async(req, res) => {
                 END AS pagtit
             FROM 
                 book
-            WHERE nome = '${nome}'
+            WHERE nome = ?
         `;
-    const [rows] = await conn.execute(sql)
+    const [rows] = await conn.execute(sql, [nome])
     const row = rows[0]
-    res.render("booksfiltroir", {row})
+
+    if(rows.length == 0){
+        res.redirect('/books')
+    } else {
+        res.render("booksfiltroir", {row})
+    }
+   
 })
 
 app.post("/books/insert", async (req, res) => {
